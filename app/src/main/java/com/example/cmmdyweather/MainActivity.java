@@ -1,9 +1,14 @@
 package com.example.cmmdyweather;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.cmmdyweather.gson.Weather;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,9 +17,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityCompat.requestPermissions(
-                this,
-                new String[]{Manifest.permission.INTERNET},
-                123);
+        SharedPreferences sharedPreferences = PreferenceManager.
+        getDefaultSharedPreferences(this);
+        if(sharedPreferences.getString("weather", null) != null){
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
